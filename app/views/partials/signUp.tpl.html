@@ -1,0 +1,99 @@
+<form role="form" name="signUpForm">
+  <div class="container-fluid ">
+      
+      <div class="row">
+          <div class="col-xs-1 col-sm-3 col-md-4 " ></div>  
+          <div class="col-xs-10 col-sm-6 col-md-4 " >
+            <center>
+                  <img class="logo" src="images/logoHD.png" height="350" width="350">             
+            </center>
+          </div>      
+          <div class="col-xs-1 col-sm-3 col-md-4 "></div> 
+        </div>  
+
+      <!--FORM EMAIL-->
+      <div class="form-group">      
+        <div class="row">       
+          <div class="col-xs-1 col-sm-3 col-md-4 " ></div>  
+          <div class="col-xs-10 col-sm-6 col-md-4 " >
+            <div class="input-group">
+                <span class="input-group-addon be-transparent"><i class="fa fa-envelope-o be-white"></i></span>                
+                <input class="form-control rounded-corners be-transparent be-white placeholder-white" type="text" placeholder="Email" ng-model="newUser.email" required>
+            </div>          
+          </div>  
+          <div class="col-xs-1 col-sm-3 col-md-4 "></div> 
+        </div>  
+      </div>
+
+      <!--FORM NOMBRE -->
+      <div class="form-group">      
+        <div class="row">       
+          <div class="col-xs-1 col-sm-3 col-md-4 " ></div>  
+          <div class="col-xs-10 col-sm-6 col-md-4 " >
+            <div class="input-group">
+                <span class="input-group-addon be-transparent"><i class="fa fa-font be-white"></i></span>                         
+                <input class="form-control rounded-corners be-transparent be-white placeholder-white" type="text" placeholder="Full Name" ng-model="newUser.name" required>
+            </div>          
+          </div>  
+          <div class="col-xs-1 col-sm-3 col-md-4 "></div> 
+        </div>  
+      </div>
+
+      <!--FORM cc-->
+      <div class="form-group">      
+        <div class="row">       
+          <div class="col-xs-1 col-sm-3 col-md-4 " ></div>  
+          <div class="col-xs-10 col-sm-6 col-md-4 " >
+            <div class="input-group">
+                <span class="input-group-addon be-transparent"><i class="fa fa-user be-white"></i></span>              
+                <input class="form-control rounded-corners be-transparent be-white placeholder-white" type="text" placeholder="CC" ng-model="newUser.cc" required>
+            </div>          
+          </div>  
+          <div class="col-xs-1 col-sm-3 col-md-4 "></div> 
+        </div>  
+      </div>   
+      
+      <!--FORM PASSWORD-->
+      <div class="form-group">
+        <div class="row">       
+          <div class="col-xs-1 col-sm-3 col-md-4 " ></div>  
+          <div class="col-xs-10 col-sm-6 col-md-4 " >
+            <div class="input-group">           
+              <span class="input-group-addon be-transparent"><i class="fa fa-unlock-alt be-white"></i></span>                         
+              <input class="form-control rounded-corners be-transparent be-white placeholder-white" type="password" placeholder="Pass" ng-model="newUser.pass" required>
+            </div>
+          </div>  
+          <div class="col-xs-1 col-sm-3 col-md-4 "></div>     
+        </div>
+      </div>
+
+      <!--FORM PASSWORD CONFIRMATION-->
+      <div class="form-group">
+        <div class="row">       
+          <div class="col-xs-1 col-sm-3 col-md-4 " ></div>  
+          <div class="col-xs-10 col-sm-6 col-md-4 " >
+            <div class="input-group">           
+              <span class="input-group-addon be-transparent"><i class="fa fa-unlock-alt be-white"></i></span>                         
+              <input class="form-control rounded-corners be-transparent be-white placeholder-white" type="password" placeholder="Pass Confirmation" ng-model="newUser.rePass"required>
+            </div>
+          </div>  
+          <div class="col-xs-1 col-sm-3 col-md-4 "></div>     
+        </div>
+      </div>
+
+      <!--BUTTON Sign Up-->
+      <div class="form-group">
+        <div class="row"> 
+          <div class="col-xs-1 col-sm-3 col-md-4 " ></div>  
+          <div class="col-xs-10 col-sm-6 col-md-4 " >                              
+            <button type="submit" class="btn btn-custom rounded-corners form-control" ng-disabled="signUpForm.$invalid" ng-click="signUp(newUser)">Create an account</button>
+          </div>  
+          <div class="col-xs-1 col-sm-3 col-md-4 "></div>         
+        </div>
+      </div> 
+
+      <!--ERRORES-->
+
+    
+  </div>
+</form>
