@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('zFitnessApp')
-	.controller('signUpCtrl', ['$scope', function ($scope) {
+	.controller('signUpCtrl', ['$scope', '$location', '$rootScope', function ($scope,$location,$rootScope) {
 		$scope.msgtxt='';		
 		$scope.signUp = function (newUser) {
 			var ref = new Firebase("https://zfitnessapp.firebaseio.com");
@@ -20,6 +20,11 @@ angular.module('zFitnessApp')
 					var userRef = new Firebase("https://zfitnessapp.firebaseio.com/usersProfile");
 					userRef.push(user);
 					console.log("Se creo sastifactoriamente el usuario con uid:", userData.uid);
+					$location.path('/login');
+					if (!$rootScope.$$phase){
+					 	$rootScope.$apply();					 	
+					}
+
 				}
 			});
 		};
