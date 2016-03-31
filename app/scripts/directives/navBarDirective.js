@@ -8,4 +8,4 @@ angular.module('zFitnessApp')
       controller: 'navBarCtrl',
       controllerAs: 'navBar'
     };      
-  })
+  });

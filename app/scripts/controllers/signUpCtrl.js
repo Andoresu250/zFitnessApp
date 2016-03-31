@@ -1,10 +1,26 @@
-'use strict'
+'use strict';
 
 angular.module('zFitnessApp')
 	.controller('signUpCtrl', ['$scope', function ($scope) {
-		$scope.msgtxt='';
-		var ref = new Firebase("https://zfitnessapp.firebaseio.com/users");
+		$scope.msgtxt='';		
 		$scope.signUp = function (newUser) {
-			ref.push(newUser);
-		}
+			var ref = new Firebase("https://zfitnessapp.firebaseio.com");
+			ref.createUser({
+				email 	 : newUser.email,
+				password : newUser.pass
+			}, function(error, userData){
+				if(error){
+					console.log("Error creating user:", error);
+				} else {
+					var user = {
+						uid  : userData.uid,
+						name : newUser.name,
+						cc   : newUser.cc 
+					};
+					var userRef = new Firebase("https://zfitnessapp.firebaseio.com/usersProfile");
+					userRef.push(user);
+					console.log("Se creo sastifactoriamente el usuario con uid:", userData.uid);
+				}
+			});
+		};
 	}]);

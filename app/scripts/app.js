@@ -40,7 +40,7 @@ angular
   var routespermission=['/home'];  //rutas que requieren el login
   $rootScope.$on('$routeChangeStart', function(){
 
-    if( routespermission.indexOf($location.path()) !=-1 && !loginService.islogged()) {     
+    if( routespermission.indexOf($location.path()) !== -1 && !loginService.islogged()) {     
       $location.path('/login');
     }
 

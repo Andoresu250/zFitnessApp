@@ -1,10 +1,28 @@
-'use strict'
+'use strict';
 
 angular.module('zFitnessApp')
-.factory('loginService',  function($http,$location,sessionService){
+.factory('loginService',  function($rootScope,$location,sessionService){
 	return {
-		login: function(data,scope){			
-			var $promise=$http.post('data/user.php', data);
+		login: function(userData,scope){	
+			var ref = new Firebase("https://zfitnessapp.firebaseio.com");
+			ref.authWithPassword({
+				email      : userData.email,
+				password   : userData.pass
+			}, function( error, authData){
+				if( error ){
+					console.log('Login Failed', error);
+					scope.msgtxt = 'Error information';
+					$location.path('/login');
+				} else {
+					console.log('Login Ok with', authData);
+					sessionService.set('user',authData.uid);
+					$location.path('/home');
+					if (!$rootScope.$$phase){
+					 	$rootScope.$apply();
+					}
+				}
+			});		
+			/*var $promise=$http.post('data/user.php', data);
 			$promise.then(function(msg){
 				var uid=msg.data;
 				if(uid){
@@ -17,7 +35,7 @@ angular.module('zFitnessApp')
 					$location.path('/login');
 				}
 
-			});
+			});*/
 		},		
 		logout: function(){
 			sessionService.destroy('user');
@@ -25,8 +43,12 @@ angular.module('zFitnessApp')
 		},
 		islogged:function(){
 					
-			if(sessionService.get('user')) return true;
-			else return false;
+			if(sessionService.get('user')){
+			 	return true;
+			}
+			else{
+				return false;	
+			} 
 			
 		}
 	};

@@ -1,7 +1,7 @@
-'use strict'
+'use strict';
 
 angular.module('zFitnessApp')
-.factory('sessionService', ['$http', function($http){
+.factory('sessionService', function(){
 	return {
 		set: function(key,value){
 			return sessionStorage.setItem(key,value);
@@ -9,9 +9,8 @@ angular.module('zFitnessApp')
 		get: function(key){
 			return sessionStorage.getItem(key);
 		},
-		destroy: function(key){
-			$http.post('data/destroy_session.php');
+		destroy: function(key){			
 			return sessionStorage.removeItem(key);
 		}
 	};
-}])
+});
