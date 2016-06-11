@@ -16,37 +16,52 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
-    'firebase'
+    'firebase',
+    'ngStorage'
   ])  
-  .config(function ($routeProvider) {
+  .config(function (loginServiceProvider, $routeProvider) {
     $routeProvider      
       .when('/login',{
         templateUrl: 'views/login.html',
-        controller: 'loginCtrl',        
+        controller: 'loginCtrl',
+        redirectTo: function(){
+          if(loginServiceProvider.$get().islogged()){
+            return '/home';
+          }
+        }             
       })
       .when('/home',{
         templateUrl: 'views/home.html',
-        controller: 'homeCtrl' 
+        controller: 'homeCtrl',
+        redirectTo: function(){
+          if(!loginServiceProvider.$get().islogged()){
+            return '/login';
+          }
+        }  
       })
       .when('/signUp', {
         templateUrl: 'views/signUp.html',
-        controller: 'signUpCtrl'
+        controller: 'signUpCtrl',
+        redirectTo: function(){
+          if(loginServiceProvider.$get().islogged()){
+            return '/home';
+          }
+        }             
       })
       .otherwise({
         redirectTo: '/login'
       });
   })
-  .run(function($rootScope, $location, loginService){
-  var routespermission=['/home'];  //rutas que requieren el login
-  $rootScope.$on('$routeChangeStart', function(){
-
-    if( routespermission.indexOf($location.path()) !== -1 && !loginService.islogged()) {     
-      $location.path('/login');
-    }
-
-    if ($location.path() === '/login' && loginService.islogged()) {
-      $location.path('/home');
-    }
-
+  .run(function(sessionService, $localStorage, $cookieStore){
+    try{
+        if($cookieStore.get('token') !== undefined){
+            sessionService.set('token', $cookieStore.get('token'));
+        }else{
+          if($localStorage.auth.token !== null){
+            sessionService.set('token', $localStorage.auth.token);
+          }
+        }        
+      }catch(err){
+        
+      }
   });
-});

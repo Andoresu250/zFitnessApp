@@ -1,9 +1,10 @@
 'use strict';
 
 angular.module('zFitnessApp')
-.factory('loginService',  function($rootScope,$location,sessionService){
+.factory('loginService',  function($rootScope,$location,sessionService, $localStorage, $cookieStore){
 	return {
 		login: function(userData,scope){	
+			console.log(userData.remember_me);
 			var ref = new Firebase("https://zfitnessapp.firebaseio.com");
 			ref.authWithPassword({
 				email      : userData.email,
@@ -13,9 +14,16 @@ angular.module('zFitnessApp')
 					console.log('Login Failed', error);
 					scope.msgtxt = 'Error information';
 					$location.path('/login');
-				} else {
-					console.log('Login Ok with', authData);
-					sessionService.set('user',authData.uid);
+				} else {					
+					if(userData.remember_me){
+						$localStorage.auth = {
+							token: authData.token,
+							selected: userData.remember_me
+						};						
+					}else{
+						$cookieStore.put('token', authData.token);						
+					}
+					sessionService.set('token', authData.token);
 					$location.path('/home');
 					if (!$rootScope.$$phase){
 					 	$rootScope.$apply();
@@ -38,16 +46,25 @@ angular.module('zFitnessApp')
 			});*/
 		},		
 		logout: function(){
-			sessionService.destroy('user');
+			sessionService.destroy('token');			
+			$localStorage.auth = {
+		        token: null,
+		        selected: null
+		    }
+		    $cookieStore.put('token', undefined);
 			$location.path('/login');
 		},
-		islogged:function(){
-					
-			if(sessionService.get('user')){
+		islogged:function(){			
+			if(sessionService.get('token')){
 			 	return true;
 			}
 			else{
-				return false;	
+				try{
+        			return $cookieStore.get('token') !== undefined || $localStorage.auth.token !== null;
+				}catch(err){
+					this.logout();
+					return false;
+				}				
 			} 
 			
 		}

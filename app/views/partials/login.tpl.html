@@ -70,7 +70,7 @@
 	        <div class="col-xs-10 col-sm-6 col-md-4 " >
 	          <div class="input-group pull-right">           
 	            <div class="checkbox">
-				  <label><input type="checkbox" class="white">Remember me?</label>
+				  <label><input type="checkbox" class="white" ng-model="user.remember_me" ng-init="user.remember_me = false">Remember me?</label>
 				</div>
 	          </div>
 	        </div>  
@@ -93,9 +93,6 @@
 	        <div class="col-xs-1 col-sm-3 col-md-4 "></div>     
 	      </div>
 	    </div>
-
-
-
 	    
 	</div>
 </form>
