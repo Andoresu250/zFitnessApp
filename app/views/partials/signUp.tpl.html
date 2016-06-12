@@ -1,103 +1,162 @@
-<form role="form" name="signUpForm">
+<form role="form" name="signUpForm" ng-controller="signUpCtrl" >
   <div class="container-fluid ">
       
       <div class="row">
-          <div class="col-xs-1 col-sm-3 col-md-4 " ></div>  
-          <div class="col-xs-10 col-sm-6 col-md-4 " >
-            <center>
-                  <img class="logo" src="images/logoHD.png" height="350" width="350">             
-            </center>
-          </div>      
-          <div class="col-xs-1 col-sm-3 col-md-4 "></div> 
-        </div>  
+        <div class="col-xs-1 col-sm-3 col-md-4 " ></div>  
+        <div class="col-xs-10 col-sm-6 col-md-4 " >
+          <center>
+                <img class="logo" src="images/logoHD.png" height="350" width="350">             
+          </center>
+        </div>      
+        <div class="col-xs-1 col-sm-3 col-md-4 "></div> 
+      </div> 
 
-      <!--FORM EMAIL-->
-      <div class="form-group">      
+      <!--ERRORES-->      
+      <div class="form-group" ng-show="msgError.length > 0">
         <div class="row">       
           <div class="col-xs-1 col-sm-3 col-md-4 " ></div>  
           <div class="col-xs-10 col-sm-6 col-md-4 " >
-            <div class="input-group">
+            <div class="alert alert-danger" role="alert">
+              <div ng-repeat="error in msgError">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                {{error}}
+                </br>                
+              </div>                
+            </div>
+          </div>  
+          <div class="col-xs-1 col-sm-3 col-md-4 "></div>     
+        </div>
+      </div>      
+
+      <!--FORM EMAIL-->      
+        <div class="row">       
+          <div class="col-xs-1 col-sm-3 col-md-4 " ></div>  
+          <div class="col-xs-10 col-sm-6 col-md-4 " >
+            <label class="control-label" for="inputEmail" ng-show="emailMsg != ''">{{emailMsg}}</label>
+            <div class="form-group has-feedback">                         
+              <div class="input-group">
                 <span class="input-group-addon be-transparent"><i class="fa fa-envelope-o be-white"></i></span>                
-                <input class="form-control rounded-corners be-transparent be-white placeholder-white" type="text" placeholder="Email" ng-model="newUser.email" required>
-            </div>          
+                <input type="text" class="form-control rounded-corners be-transparent be-white placeholder-white" id="inputEmail" placeholder="Email" ng-model="newUser.email" name="inputEmail" ng-change="checkEmail()" required>
+              </div>
+              <span class="glyphicon glyphicon-ok form-control-feedback be-white" ng-show="(newUser.email != undefined && newUser.email != '' && emailOk)"></span>
+              <span class="glyphicon glyphicon-remove form-control-feedback be-white" ng-show="!emailOk && emailMsg != ''"></span>                           
+            </div>
           </div>  
-          <div class="col-xs-1 col-sm-3 col-md-4 "></div> 
-        </div>  
-      </div>
+          <div class="col-xs-1 col-sm-3 col-md-4 "></div>     
+        </div>
 
-      
-
-      <!--FORM NAME-->
-      <div class="form-group">      
+      <!--FORM FIRST NAME-->      
         <div class="row">       
           <div class="col-xs-1 col-sm-3 col-md-4 " ></div>  
           <div class="col-xs-10 col-sm-6 col-md-4 " >
-            <div class="input-group">
-                <span class="input-group-addon be-transparent"><i class="fa fa-font be-white"></i></span>                         
-                <input class="form-control rounded-corners be-transparent be-white placeholder-white" type="text" placeholder="Full Name" ng-model="newUser.name" required>
-            </div>          
+            <label class="control-label" for="inputFirstName" ng-show="firstNameMsg != ''">{{firstNameMsg}}</label>
+            <div class="form-group has-feedback">                         
+              <div class="input-group">
+                <span class="input-group-addon be-transparent"><i class="fa fa-font be-white"></i></span>
+                <input type="text" class="form-control rounded-corners be-transparent be-white placeholder-white" id="inputFirstName" placeholder="First Name" ng-model="newUser.firstName" ng-change="checkFirstName()" required>
+              </div>
+              <span class="glyphicon glyphicon-ok form-control-feedback be-white" ng-show="firstNameOk"></span>
+              <span class="glyphicon glyphicon-remove form-control-feedback be-white" ng-show="firstNameMsg != ''"></span>                           
+            </div>
           </div>  
-          <div class="col-xs-1 col-sm-3 col-md-4 "></div> 
-        </div>  
-      </div>
+          <div class="col-xs-1 col-sm-3 col-md-4 "></div>     
+        </div>            
+
+      <!--FORM LAST NAME-->      
+        <div class="row">       
+          <div class="col-xs-1 col-sm-3 col-md-4 " ></div>  
+          <div class="col-xs-10 col-sm-6 col-md-4 " >
+            <label class="control-label" for="inputLastName" ng-show="lastNameMsg != ''">{{lastNameMsg}}</label>
+            <div class="form-group has-feedback">                         
+              <div class="input-group">
+                <span class="input-group-addon be-transparent"><i class="fa fa-font be-white"></i></span>
+                <input type="text" class="form-control rounded-corners be-transparent be-white placeholder-white" id="inputLastName" placeholder="Last Name" ng-model="newUser.lastName" ng-change="checkLastName()" required>
+              </div>
+              <span class="glyphicon glyphicon-ok form-control-feedback be-white" ng-show="lastNameOk"></span>
+              <span class="glyphicon glyphicon-remove form-control-feedback be-white" ng-show="lastNameMsg != ''"></span>                           
+            </div>
+          </div>  
+          <div class="col-xs-1 col-sm-3 col-md-4 "></div>     
+        </div>       
 
       <!--FORM cc-->
-      <div class="form-group">      
-        <div class="row">       
-          <div class="col-xs-1 col-sm-3 col-md-4 " ></div>  
-          <div class="col-xs-10 col-sm-6 col-md-4 " >
+      <div class="row">       
+        <div class="col-xs-1 col-sm-3 col-md-4 " ></div>  
+        <div class="col-xs-10 col-sm-6 col-md-4 " >
+          <label class="control-label" for="inputCC" ng-show="ccMsg != ''">{{ccMsg}}</label>
+          <div class="form-group has-feedback">                         
             <div class="input-group">
-                <span class="input-group-addon be-transparent"><i class="fa fa-user be-white"></i></span>              
-                <input class="form-control rounded-corners be-transparent be-white placeholder-white" type="text" placeholder="CC" ng-model="newUser.cc" required>
-            </div>          
-          </div>  
-          <div class="col-xs-1 col-sm-3 col-md-4 "></div> 
+              <span class="input-group-addon be-transparent"><i class="fa fa-user be-white"></i></span>                
+              <input type="text" class="form-control rounded-corners be-transparent be-white placeholder-white" id="inputCC" placeholder="CC" ng-model="newUser.cc" ng-change="checkCC()" required>
+            </div>
+            <span class="glyphicon glyphicon-ok form-control-feedback be-white" ng-show="ccOk"></span>
+            <span class="glyphicon glyphicon-remove form-control-feedback be-white" ng-show="ccMsg != ''"></span>                           
+          </div>
         </div>  
-      </div>   
+        <div class="col-xs-1 col-sm-3 col-md-4 "></div>     
+      </div>
 
-      
+      <!--FORM Phone-->
+      <div class="row">       
+        <div class="col-xs-1 col-sm-3 col-md-4 " ></div>  
+        <div class="col-xs-10 col-sm-6 col-md-4 " >
+          <label class="control-label" for="inputPhone" ng-show="phoneMsg != ''">{{phoneMsg}}</label>
+          <div class="form-group has-feedback">                         
+            <div class="input-group">
+              <span class="input-group-addon be-transparent"><i class="fa fa-mobile be-white" aria-hidden="true"></i></span>                
+              <input type="text" class="form-control rounded-corners be-transparent be-white placeholder-white" id="inputPhone" placeholder="Phone Number" ng-model="newUser.phone" ng-change="checkPhone()" required>
+            </div>
+            <span class="glyphicon glyphicon-ok form-control-feedback be-white" ng-show="phoneOk"></span>
+            <span class="glyphicon glyphicon-remove form-control-feedback be-white" ng-show="phoneMsg != ''"></span>                           
+          </div>
+        </div>  
+        <div class="col-xs-1 col-sm-3 col-md-4 "></div>     
+      </div>
       
       <!--FORM PASSWORD-->
-      <div class="form-group">
-        <div class="row">       
-          <div class="col-xs-1 col-sm-3 col-md-4 " ></div>  
-          <div class="col-xs-10 col-sm-6 col-md-4 " >
-            <div class="input-group">           
-              <span class="input-group-addon be-transparent"><i class="fa fa-unlock-alt be-white"></i></span>                         
-              <input class="form-control rounded-corners be-transparent be-white placeholder-white" type="password" placeholder="Pass" ng-model="newUser.pass" required>
+      <div class="row">       
+        <div class="col-xs-1 col-sm-3 col-md-4 " ></div>  
+        <div class="col-xs-10 col-sm-6 col-md-4 " >
+          <label class="control-label" for="inputPass" ng-show="passMsg != ''">{{passMsg}}</label>
+          <div class="form-group has-feedback">                         
+            <div class="input-group">
+              <span class="input-group-addon be-transparent"><i class="fa fa-unlock-alt be-white"></i></span>                
+              <input type="password" class="form-control rounded-corners be-transparent be-white placeholder-white" id="inputPass" placeholder="Pass" ng-model="newUser.pass" ng-change="checkPass()" required>
             </div>
-          </div>  
-          <div class="col-xs-1 col-sm-3 col-md-4 "></div>     
-        </div>
-      </div>
+            <span class="glyphicon glyphicon-ok form-control-feedback be-white" ng-show="passOk"></span>
+            <span class="glyphicon glyphicon-remove form-control-feedback be-white" ng-show="passMsg != ''"></span>                           
+          </div>
+        </div>  
+        <div class="col-xs-1 col-sm-3 col-md-4 "></div>     
+      </div>      
 
       <!--FORM PASSWORD CONFIRMATION-->
-      <div class="form-group">
-        <div class="row">       
-          <div class="col-xs-1 col-sm-3 col-md-4 " ></div>  
-          <div class="col-xs-10 col-sm-6 col-md-4 " >
-            <div class="input-group">           
-              <span class="input-group-addon be-transparent"><i class="fa fa-unlock-alt be-white"></i></span>                         
-              <input class="form-control rounded-corners be-transparent be-white placeholder-white" type="password" placeholder="Pass Confirmation" ng-model="newUser.rePass"required>
+      <div class="row">       
+        <div class="col-xs-1 col-sm-3 col-md-4 " ></div>  
+        <div class="col-xs-10 col-sm-6 col-md-4 " >
+          <label class="control-label" for="inputPassRe" ng-show="passReMsg != ''">{{passReMsg}}</label>
+          <div class="form-group has-feedback">                         
+            <div class="input-group">
+              <span class="input-group-addon be-transparent"><i class="fa fa-unlock-alt be-white"></i></span>                
+              <input type="password" class="form-control rounded-corners be-transparent be-white placeholder-white" id="inputPassRe" placeholder="Pass Confirmation" ng-model="newUser.rePass" ng-change="checkRePass()" required>
             </div>
-          </div>  
-          <div class="col-xs-1 col-sm-3 col-md-4 "></div>     
-        </div>
-      </div>
+            <span class="glyphicon glyphicon-ok form-control-feedback be-white" ng-show="passReOk"></span>
+            <span class="glyphicon glyphicon-remove form-control-feedback be-white" ng-show="passReMsg != ''"></span>                           
+          </div>
+        </div>  
+        <div class="col-xs-1 col-sm-3 col-md-4 "></div>     
+      </div>   
+      
 
       <!--BUTTON Sign Up-->
       <div class="form-group">
         <div class="row"> 
           <div class="col-xs-1 col-sm-3 col-md-4 " ></div>  
           <div class="col-xs-10 col-sm-6 col-md-4 " >                              
-            <button type="submit" class="btn btn-custom rounded-corners form-control" ng-disabled="signUpForm.$invalid" ng-click="signUp(newUser)">Create an account</button>
+            <button type="submit" class="btn btn-custom rounded-corners form-control" ng-disabled="!(emailOk && firstNameOk && lastNameOk && phoneOk && ccOk && passOk && passReOk)" ng-click="signUp(newUser)">Create an account</button>
           </div>  
           <div class="col-xs-1 col-sm-3 col-md-4 "></div>         
         </div>
       </div> 
-
-      <!--ERRORES-->
-
-    
   </div>
 </form>

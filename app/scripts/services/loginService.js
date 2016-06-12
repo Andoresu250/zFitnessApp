@@ -3,8 +3,7 @@
 angular.module('zFitnessApp')
 .factory('loginService',  function($rootScope,$location,sessionService, $localStorage, $cookieStore){
 	return {
-		login: function(userData,scope){	
-			console.log(userData.remember_me);
+		login: function(userData,scope){				
 			var ref = new Firebase("https://zfitnessapp.firebaseio.com");
 			ref.authWithPassword({
 				email      : userData.email,

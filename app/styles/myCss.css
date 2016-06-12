@@ -24,6 +24,10 @@ label{
  color: white !important; 
 }
 
+.be-red{
+  color: #a94442 !important;
+}
+
 .logo
 {
   display: block;
@@ -61,7 +65,7 @@ ul.nav li.active a {
 }
 
 .be-transparent{
-	background: transparent;
+	background: transparent !important;
 }
 
 .placeholder-white::-webkit-input-placeholder,
